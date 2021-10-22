@@ -1,0 +1,19 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmStrmdws") 列表
+				li.breadcrumb-item.active(aria-current="page") 下游公司详情
+		.basic.text-center
+			.row
+				.col-10
+					h3.nome #{strmdw.nome}
+				.col-2
+					a.btn.btn-warning(href="/pmStrmdwUp/"+strmdw._id) 更新
+			include ./detail/info
+		.sells
+			include ./detail/sell
+	script(src="/js/user/pmer/strmdw/detail.js")

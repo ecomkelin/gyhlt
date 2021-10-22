@@ -1,0 +1,28 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 采购单列表
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#dutSearch(type="text", placeholder="采购单搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			span.mr-5 查看采购订单:
+			button.mr-5.btn.btn-success.statusClick#statusAll(class=stsBtn, type="button") 全部
+			each sts in Conf.dutSts
+				- a;
+				button.ml-3.btn.btn-default.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+		.add.mt-3
+			include ./add
+		.dutsList.mt-3
+			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@od@")
+			//- input#dutFilterAjax(type="hidden", value="?key=xxx@#dutsElem")
+			#dutsElem.mt-5
+
+	script(src="/js/user/oder/dut/add.js")
+
+	script(src="/js/dbs/ajaxGet/dut.js")

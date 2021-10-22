@@ -1,0 +1,51 @@
+#pdsecsPage
+	.row
+		.col-6.col-sm-9
+			//- button.btn.btn-warning.btn-block(type="button") + 同步产品#
+			.count
+				span 产品信息数量: 
+				span#pdsecCount
+		.col-6.col-sm-3
+			button.btn.btn-info.btn-block#pdsecAddPageShow(type="button") + 增加产品信息
+	.text-info.mt-4 可点击图片进入完善材质面料与对应价格
+	input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?pdfirId="+pdfir._id+"@#pdsecsElem@bn")
+	#pdsecsElem.mt-2
+
+//- 添加产品
+#pdsecAddPage(style="display:none")
+	.row.my-3
+		.col-12.col-sm-6
+		.col-12.col-sm-3
+		.col-12.col-sm-3
+			button.btn.btn-secondary.btn-block#pdsecsPageShow(type="button") 取消添加
+
+	form#pdsecForm(method="post", action="/bnPdsecNew", enctype="multipart/form-data")
+		input#pdfirIpt(type="hidden", name="obj[pdfir]", value=pdfir._id)
+
+		input(type="hidden", name="picDir", value=Conf.picPath.pdsec)
+		input#firmCode(type="hidden", value=crUser.firm.code)
+		input#picName(type="hidden", name="picName", value=crUser.firm.code)
+		.row
+			.col-12(align="center")
+				img#crtImg(src="/imgs/createPicture.jpg", width="120px")
+		.form-group.row.udPhoto(style="display:none")
+			label.col-4.col-form-label(for="picUpload") PdImg
+			.col-8
+				input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="photoIpt") 产品线稿图
+			.col-8.col-sm-10
+				input#photoIpt.form-control(type="text", name="obj[photo]")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="specIpt") 产品尺寸
+			.col-8.col-sm-10
+				input#specIpt.form-control(type="text", name="obj[spec]", placeholder="长*宽*高")
+		hr
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="codeIpt") 产品编号
+			.col-8.col-sm-10
+				input#codeIpt.form-control(type="text", name="obj[code]")
+		hr
+		.form-group.row
+			.col-12.text-right
+				input.btn.btn-success(type="submit", value="添加")

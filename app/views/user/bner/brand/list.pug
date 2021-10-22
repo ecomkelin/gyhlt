@@ -1,0 +1,23 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 品牌列表
+		.option
+			.row
+				.col-9.input-group
+					input.form-control#brandSearch(type="text", placeholder="搜索品牌")
+					.input-group-append
+						button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+				.col-3.text-right
+					a.btn.btn-warning(href="/bnBrandAdd") <span class="oi oi-plus"></span>
+
+		input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@bn")
+		//- input#brandFilterAjax(type="hidden", value="?key=xxx@#brandsElem")
+		#brandsElem.mt-4
+
+	script(src="/js/dbs/ajaxGet/brand.js")
+	script(src="/js/user/bner/brand/list.js")

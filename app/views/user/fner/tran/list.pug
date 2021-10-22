@@ -1,0 +1,25 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 运输单列表
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#tranSearch(type="text", placeholder="运输单搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			span.mr-5 查看采购订单:
+			button.mr-5.btn.btn-success.statusClick#statusAll(class=stsBtn, type="button") 全部
+			each sts in Conf.tranSts
+				- a;
+				button.ml-3.btn.btn-default.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+		.transList.mt-3
+			input#tranFilterAjax(type="hidden", value="/usTransAjax?@#transElem@fn@")
+			//- input#tranFilterAjax(type="hidden", value="?key=xxx@#transElem")
+			#transElem.mt-5
+
+	script(src="/js/user/fner/tran/add.js")
+	script(src="/js/dbs/ajaxGet/tran.js")

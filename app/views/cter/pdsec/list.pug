@@ -1,0 +1,14 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 线稿图
+		.pdsecsList
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@ct")
+			//- input#pdsecFilterAjax(type="hidden", value="?key=xxx@#pdsecsElem")
+			#pdsecsElem.mt-5
+
+	script(src="/js/dbs/ajaxGet/pdsec.js")

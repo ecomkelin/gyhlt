@@ -1,0 +1,25 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/odQuts") 列表
+				li.breadcrumb-item.active(aria-current="page") 报价单
+		.info.my-3
+			include ./detail/info
+		.filter
+			include ./detail/filter
+		.compds
+			if inquot.status >= Conf.status.confirm.num
+				-a;
+				include ./compd/listConfirm
+			else
+				include ./compd/list
+
+		//- include ../../../aaPlugin/comment/list
+		if inquot.quter
+			-a;
+			- let toUser = inquot.quner;
+			include ../../../aaPlugin/notify/list

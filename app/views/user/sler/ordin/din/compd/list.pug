@@ -1,0 +1,143 @@
+.row
+	.col-12
+		button.btn.btn-link.qntPrTdBtn(type="button") <span class="oi oi-eye"></span>
+table.mt-3.table.table-bordered
+	thead.thead-light
+		th 品牌
+		th 系列
+		th 产品规格
+		th 工艺面料
+		th.qntPrTd(style="width:10%; display:none") 平台报价
+		th(style="width:18%") 客户成交价
+	thead
+		each dinpd in dinpds
+			-a;
+			tr.text-info(id="tr-compdid-"+dinpd._id)
+				td
+					.pdnum.text-left.text-dark 商品编号: [#{dinpd.pdnum}]
+					.brandnome.mt-4
+						if dinpd.brand
+							- brand = dinpd.brand;
+							span [#{brand.nome}]
+						else
+							span #{dinpd.brandNome}
+
+					if dinpd.area
+						-a;
+						.pdarea.mt-3
+							span.text-dark 区域: 
+							span #{dinpd.area}
+					.mt-3.qrCode-img.text-left
+						div 商品二追踪维码:
+						.qrCodeCompdDiv(id="qrCodeCompdDiv-"+dinpd._id)
+						- let qrCodeCompdUrl = "http://furnituretoplife.com/compd/"+dinpd._id;
+						input.qrCodeCompdStr(id="qrCodeCompdStr-"+dinpd._id, type="hidden", value=qrCodeCompdUrl)
+				td
+					.pdnome
+						span.text-dark 品类: 
+						span #{dinpd.pdNome}
+					if dinpd.pdfir
+						- pdfir = dinpd.pdfir;
+						.pdfircode.mt-3
+							span.text-dark 系列名: 
+							span [#{pdfir.code}]
+					else
+						- let firNome = '产品系列名称';
+						if dinpd.firNome
+							- firNome = dinpd.firNome;
+						.firnome.mt-3
+							span.text-dark 系列名: 
+							span #{firNome}
+					.photo.mt-3
+						- let photo = "/imgs/createPicture.jpg";
+						if dinpd.photo
+							- photo = dinpd.photo;
+							img.thumbnailImg(src=photo, width="120px")
+						else if dinpd.firphoto
+							- photo = dinpd.firphoto;
+							img.thumbnailImg(src=photo, width="120px")
+						else
+							img(src=photo, width="120px")
+				td
+					if dinpd.pdsec
+						- pdsec = dinpd.pdsec;
+						.pdseccode
+							span.text-dark 产品编码: 
+							span [#{pdsec.code}]
+						.pdsecspec.mt-3
+							span.text-dark 产品尺寸: 
+							span [#{pdsec.spec}]
+					else
+						.pdseccode
+							span.text-dark 产品编码: 
+							span #{dinpd.secNome}
+						.pdsecspec.mt-3
+							span.text-dark 产品尺寸: 
+							span #{dinpd.specf}
+
+					.sketch.mt-3
+						- let sketch = "/imgs/createPicture.jpg";
+						if dinpd.sketch
+							- sketch = dinpd.sketch;
+							img.thumbnailImg(src=sketch, width="120px")
+						else if dinpd.pdsec
+							-a;
+							- sketch = dinpd.pdsec.photo;
+							img.thumbnailImg(src=sketch, width="120px")
+						else
+							img(src=sketch, width="120px")
+				td
+					- let pdthdcode = '查找数据库';
+					if dinpd.pdthd
+						- pdthdcode = '['+dinpd.pdthd.code+']';
+					.pdthdcode #{pdthdcode}
+					.pdmater.mt-3 #{dinpd.mater}
+					.pdcraft.mt-3 #{dinpd.craft}
+					.images
+						- let subsp = -1;
+						each image in dinpd.images
+							- subsp++;
+							if image && image.length > 5
+								-a;
+								img.thumbnailImg.mt-2(src=image, width="120px")
+				td.qntPrTd.bg-dark(style="display:none")
+					.qntPr.mt-3.text-white
+						.qntPr
+							span 单价:
+							span #{dinpd.qntPr}
+							input(id="qntPr-dinPr-"+dinpd._id, type="hidden", value=dinpd.qntPr)
+						.qntPrTot.mt-3
+							span 总价:
+							span #{dinpd.qntPr * dinpd.quant}
+				td
+					.quant
+						span.text-dark 数量: 
+						span #{dinpd.quant}
+
+
+					.dinPr.mt-3
+						span.text-dark 单价: 
+						if dinpd.dinPr
+							-a;
+							span #{dinpd.dinPr}
+						else
+							span 售价错误
+						strong
+							span.text-dark 总价: 
+							span(id="tot-dinPr-"+dinpd._id) #{dinpd.quant * dinpd.dinPr}
+
+					.compdSts.mt-3
+						- let status = '';
+						each sts in Conf.status
+							- status = '';
+							if sts.num == dinpd.compdSts
+								- status = sts.val;
+								- break;
+						span.text-dark 商品状态: 
+						if din.status > Conf.status.init.num
+							-a;
+							span.text-danger #{status}
+						else
+							span.text-danger 创建中
+
+script(src="/js/user/sler/din/compdEdit.js")

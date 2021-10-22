@@ -1,0 +1,29 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBrand/"+pdthd.pdsec.pdfir.brand._id) #{pdthd.pdsec.pdfir.brand.nome}
+				li.breadcrumb-item: a(href="/bnPdfir/"+pdthd.pdsec.pdfir._id) #{pdthd.pdsec.pdfir.code}
+				li.breadcrumb-item: a(href="/bnPdsec/"+pdthd.pdsec._id) #{pdthd.pdsec.code}
+				li.breadcrumb-item.active(aria-current="page") #{pdthd.code}
+		.update.text-right
+			a.btn.btn-warning(href="/bnPdthdup/"+pdthd._id) 修改
+		.info
+			.row
+				.col-4.text-right 编号:
+				.col-8 #{pdthd.code}
+				.col-4.text-right 价格:
+				.col-8.text-info #{pdthd.price} €
+				.col-4.text-right 备注:
+				.col-8 #{pdthd.note}
+			.row.mt-3
+				.col-4.text-right 材质
+				.col-8 工艺面料
+			.row.text-info
+				for i in [0, 1, 2, 3, 4, 5]
+					-a;
+					.col-4.text-right #{pdthd.maters[i]}
+					.col-8 #{pdthd.crafts[i]}

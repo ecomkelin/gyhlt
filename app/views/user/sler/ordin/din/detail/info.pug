@@ -1,0 +1,40 @@
+.border.border-dark.p-3
+	.row.text-center
+		.col-md-5
+			h5.code
+				span 订单号: 
+				span.text-danger #{din.code}
+			.time.mt-2
+				span 下单时间: 
+				span #{moment(din.dinAt).format('DD/MM/YYYY')}
+			.din.mt-2
+				span 销售员:
+				if din.seller
+					- seller = din.seller;
+					span #{seller.nome} [ #{seller.code} ]
+				else
+					span 数据丢失
+		.col-md-5
+			.cter 客户:
+				if din.cter
+					- cter = din.cter;
+					span #{cter.nome} [#{cter.code}]
+				else
+					span #{din.cterNome}
+			.status.mt-2
+				- let status = '';
+				each sts in Conf.status
+					- status = '';
+					if sts.num == din.status
+						- status = sts.val;
+						- break;
+				span 状态: #{status}
+
+		.col-md-2
+			.qrCode-img.text-left
+				div 订单二追踪维码:
+				#qrCodeObjDiv
+				- let qrCodeObjUrl = 'http://furnituretoplife.com/ordin/'+din._id;
+				input#qrCodeObjStr(type="hidden", value=qrCodeObjUrl)
+			.excel.mt-4
+				a(href="/slDinExcel/"+din._id) Excel <span class="oi oi-data-transfer-download"></span>

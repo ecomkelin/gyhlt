@@ -1,0 +1,25 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnPdfirs") 列表
+				li.breadcrumb-item: a(href="/bnBrand/"+pdfir.brand._id) 所属品牌: #{pdfir.brand.nome}
+				li.breadcrumb-item.active(aria-current="page") #{pdfir.code}
+
+		- let photo = pdfir.photo;
+		if !photo
+			- photo = Conf.picDefault.pdfir;
+		.info
+			include ./detail/info
+			hr
+
+		.pdsec
+			include ./detail/pdsec
+
+	script(src="/js/dbs/ajaxGet/pdsec.js")
+
+	script(src="/js/user/bner/pdfir/pdsec.js")
+	script(src="/js/user/bner/pdsec/edit.js")

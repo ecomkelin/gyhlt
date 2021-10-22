@@ -1,0 +1,117 @@
+- let quantTotal = 0;
+
+.row
+	.col-md-6
+		.quantTotal
+			span 总条目: 
+			span #{compds.length}
+	.col-md-6.text-right
+		.quantTotal
+			span 总数量: 
+			span#span-quantTotal
+table.mt-2.table.table-bordered
+	thead.thead-light
+		th 品牌
+		th 系列
+		th 产品规格
+		th(style="width:18%") 材质面料描述
+		th 材质面料图片
+		th(style="width:14%") 数量 | 价格(欧元)
+	thead
+		- let len = 0;
+		each compd in compds
+			- len++;
+			- let brandnum = '';
+			each brand in brands
+				if brand.brandNome == compd.brandNome
+					- brandnum = brand.num;
+			tr.text-info.pdTr(pdbrand=brandnum, pdSts=compd.qntpdSts, id="tr-compdid-"+compd._id)
+				td
+					.qntnumAjax
+						- action = "/slQunpdUpdAjax";
+						include ../../../../aaPlugin/compd/ajax/qntnumAjax
+					.brandFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/brandFixed
+						
+					if compd.area
+						-a;
+						.pdarea.mt-3
+							span.text-dark 区域: 
+							span #{compd.area}
+
+					if inquot.status == Conf.status.init.num || inquot.status == Conf.status.quoting.num
+						a-;
+						if compd.qntpdSts == Conf.status.quoting.num
+							-a;
+							a.btn.btn-info.mt-5(href="/slQunpdUp/"+compd._id) 更改商品
+						else if compd.qntpdSts == Conf.status.del.num
+							-a;
+							a.btn.btn-danger.mt-5(href="/slQunpdUp/"+compd._id) 更改商品
+				td
+					.pdnome
+						span.text-dark 品类: 
+						span #{compd.pdNome}
+					.pdfirFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/pdfirFixed
+					.photoUpd.mt-2
+						- reUrl = "/slQun/";
+						include ../../../../aaPlugin/compd/upd/photoUpd
+				td
+					.pdsecFixed
+						include ../../../../aaPlugin/compd/basic/pdsecFixed
+
+					.sketchUpd.mt-3
+						- reUrl = "/slQun/";
+						include ../../../../aaPlugin/compd/upd/sketchUpd
+				td
+					.pdthdout
+						include ../../../../aaPlugin/compd/basic/pdthdout
+						
+					.thdDespAjax
+						- action = "/slQunpdUpdAjax";
+						include ../../../../aaPlugin/compd/ajax/thdDespAjax
+					.noteFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/noteFixed
+				td
+					.imagesUpd
+						- reUrl = "/slQun/";
+						include ../../../../aaPlugin/compd/upd/imagesUpd
+				td
+					input.statusInput(type="hidden", value=compd.qntpdSts)
+					if compd.qntpdSts != Conf.status.del.num
+						- quantTotal += compd.quant;
+						.quantAjax
+							- action = "/slQunpdUpdAjax";
+							include ../../../../aaPlugin/compd/ajax/quantAjax
+
+						.estimate.text-dark.mt-3
+							if compd.estimate
+								- a;
+								span 预估单价: #{compd.estimate}
+						if inquot.status > Conf.status.quoting.num
+							-a;
+							.qntPr.mt-3
+								span.text-dark 单价:
+								if compd.qntPr && !isNaN(compd.qntPr)
+									- a;
+									span #{(compd.qntPr).toFixed(2)} €
+								else
+									span.text-dark  未报价
+
+							h5.total.mt-2
+								span.text-dark 总价:
+								if compd.qntPr && !isNaN(compd.qntPr)
+									-a;
+									span(id="span-qntPrtot-"+compd._id) #{(compd.qntPr * compd.quant).toFixed(2)} €
+								else
+									span.text-dark  未报价
+						.qntpdStsFixed.mt-5
+							include ../../../../aaPlugin/compd/basic/qntpdStsFixed
+
+					else
+						.del.text-danger
+							div.text-center 删除原因:
+							.delNote.mt-2 #{compd.delNote}
+.row
+	.col-12.text-right
+		input#ipt-quantTotal(type="hidden", value=quantTotal)

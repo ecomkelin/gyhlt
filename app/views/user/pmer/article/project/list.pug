@@ -1,0 +1,12 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 项目案例
+		.update.text-right
+			a.btn.btn-info(href="/pmProjectAdd") +
+		.info.mt-5
+			include ../list

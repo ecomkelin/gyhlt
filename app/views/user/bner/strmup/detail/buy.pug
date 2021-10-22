@@ -1,0 +1,11 @@
+each buy in strmup.buys
+	-let brand = buy.brand;
+	.row.mt-3.border
+		.col-6
+			a(href="/bnBuyBrand/"+brand._id)
+				span.mr-3 #{brand.nome}
+				span #{brand.buynum}
+		.col-6 
+			a(href="/bnBuy/"+buy._id)
+				span #{buy.discount}
+				span #{buy.note}

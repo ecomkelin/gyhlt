@@ -1,0 +1,23 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmSells") 列表
+				li.breadcrumb-item.active(aria-current="page") 客户折扣详情 #{sell.nome}
+		.update.text-right
+			a.btn.btn-warning(href="/pmSellUp/"+sell._id) 更新
+		.discount.border.p-2.mt-3.row.text-center
+			.col-12
+				if sell.brand
+					- brand = sell.brand;
+					h3.nome #{brand.nome}
+			.col-12
+				if sell.strmdw
+					- strmdw = sell.strmdw;
+					h3.nome #{strmdw.nome}
+			.col-12
+				h3 #{sell.discount}
+				p #{sell.note}

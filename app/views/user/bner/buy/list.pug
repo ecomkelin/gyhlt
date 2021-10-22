@@ -1,0 +1,18 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 供应商折扣
+
+		.addButton.text-right
+			a.btn.btn-warning(href="/bnBuyAdd") +
+		.buysList
+			input#buyFilterAjax(type="hidden", value="/usBuysAjax?@#buysElem@bn")
+			//- input#buyFilterAjax(type="hidden", value="?key=xxx@#buysElem")
+			#buysElem.mt-5
+
+	script(src="/js/dbs/ajaxGet/buy.js")
+	script(src="/js/user/bner/buy/list.js")

@@ -1,0 +1,18 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 客户折扣列表
+
+		.addButton.text-right
+			a.btn.btn-warning(href="/pmSellAdd") +
+		.sellsList
+			input#sellFilterAjax(type="hidden", value="/usSellsAjax?@#sellsElem@pm")
+			//- input#sellFilterAjax(type="hidden", value="?key=xxx@#sellsElem")
+			#sellsElem.mt-5
+
+	script(src="/js/dbs/ajaxGet/sell.js")
+	script(src="/js/user/pmer/sell/list.js")

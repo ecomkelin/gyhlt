@@ -1,0 +1,64 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item.active(aria-current="page") 订单号: #{din.code}
+		.info.my-3
+			.border.border-dark.p-3
+				.row.text-center
+					.col-md-5
+						h5.code
+							span 订单号: 
+							span.text-danger #{din.code}
+						.crtAt.mt-2
+							span 下单时间: 
+							span #{moment(din.crtAt).format('YYYY-MM-DD')}
+						.billAt.mt-2
+							span 付款时间: 
+							span #{moment(din.billAt).format('YYYY-MM-DD')}
+						.dinAt.mt-2
+							span 交货时间: 
+							if din.dinAt
+								-a;
+								span #{moment(din.dinAt).format('YYYY-MM-DD')}
+					.col-md-5
+						.cter 采购者:
+							if din.cter
+								- cter = din.cter;
+								span #{cter.nome} [#{cter.code}]
+							else
+								span #{din.cterNome}
+						.din.mt-2
+							span 销售员:
+							if din.seller
+								- seller = din.seller;
+								span #{seller.nome} [ #{seller.code} ]
+							else
+								span 数据丢失
+						.quantTotal.mt-2
+							.row
+								.col-6
+									span 种类: #{din.compds.length}
+								.col-6
+									span 件数: 
+									span#span-quantTotal
+					.col-md-2
+						.dinPr
+							span 合同价格:
+							h5.text-info #{din.dinImp} €
+						.status.mt-3
+							- let status = '';
+							each sts in Conf.status
+								- status = '';
+								if sts.num == din.status
+									- status = sts.val;
+									- break;
+							span 订单状态:
+							h5.text-info #{status}
+		.mbSpace
+			include ./detail/compdsMb
+		.pcSpace
+			include ./detail/compdsPc
+	script(src="/js/dbs/compd/total.js")

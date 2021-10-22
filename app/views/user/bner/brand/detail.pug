@@ -1,0 +1,32 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBrands") 列表
+				li.breadcrumb-item.active(aria-current="page") 品牌: [#{brand.nome}]
+
+		input#brandId(type="hidden", value=brand._id)
+		- let logo = brand.logo;
+		if !logo
+			- logo = Conf.picDefault.brand;
+		include ./detail/info
+
+		.row.mt-5
+			.col-12.col-sm-3
+				include ./detail/pdnome
+			.col-12.col-sm-9
+				//- 添加系列
+				include ./detail/pdfir
+
+	script(src="/js/user/bner/brand/detail.js")
+
+	script(src="/js/user/bner/brand/pdnomeBrand.js")
+
+	script(src="/js/dbs/ajaxGet/pdfir.js")
+	script(src="/js/user/bner/pdfir/list.js")
+
+	script(src="/js/user/bner/brand/pdfir.js")
+	script(src="/js/user/bner/pdfir/edit.js")

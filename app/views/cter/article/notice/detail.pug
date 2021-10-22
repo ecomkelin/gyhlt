@@ -1,0 +1,11 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/ctNotices") 列表
+				li.breadcrumb-item.active(aria-current="page") 新闻详情
+		.info
+			include ../detail

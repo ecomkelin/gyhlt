@@ -1,0 +1,31 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/slQuns") 列表
+				li.breadcrumb-item.active(aria-current="page") 询价单详情
+		.info.my-3
+			include ./detail/info
+		.filter
+			include ./detail/filter
+		div(style="height:40px")
+
+		.compds.mt-3
+			if inquot.status >= Conf.status.confirm.num
+				-a;
+				include ./compd/listConfirm
+			else
+				include ./compd/list
+		.compdAdd.mt-5
+			if inquot.status == Conf.status.init.num || inquot.status == Conf.status.quoting.num
+				-a;
+				include ./compd/add
+		if inquot.quter
+			-a;
+			- let toUser = inquot.quter;
+			include ../../../aaPlugin/notify/list
+
+	script(src="/js/user/sler/qun/compdEdit.js")

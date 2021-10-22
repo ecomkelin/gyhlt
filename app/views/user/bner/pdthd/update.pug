@@ -1,0 +1,45 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.row
+			.col-8 品牌更新
+			.col-4.text-right
+				a.btn.btn-secondary(href="/bnPdthd/"+pdthd._id) 取消
+		hr
+		form#pdthdForm(method="post", action="/bnPdthdUpd", enctype="multipart/form-data")
+			input(type="hidden", name="obj[_id]", value=pdthd._id)
+			input#pdsecIpt(type="hidden", name="obj[pdsec]", value=pdthd.pdsec._id)
+			.form-group.row
+				label.col-4.col-md-2.col-form-label(for="codeIpt") 编号
+				.col-8.col-md-10
+					input#codeIpt.form-control(type="text", name="obj[code]", value=pdthd.code)
+				.col-4.col-md-2
+				.col-8.col-md-10.text-danger#codeOpt
+			.form-group.row
+				label.col-4.col-md-2.col-form-label(for="priceIpt") 价格
+				.col-8.col-md-10
+					input#priceIpt.form-control(type="text", name="obj[price]", value=pdthd.price)
+			.form-group.row.text-center
+				label.col-md-2.col-form-label
+				label.col-md-4.col-form-label 材质
+				label.col-md-1.col-form-label
+				label.col-md-5.col-form-label 工艺面料
+				each k in [0, 1, 2, 3, 4, 5]
+					-a;
+					.col-md-2.mt-2
+					.col-md-4.mt-2
+						input.form-control.materIpt(type="text", name="obj[maters]["+k+"]", value=pdthd.maters[k])
+					.col-md-1.mt-2
+					.col-md-5.mt-2
+						input.form-control.craftIpt(type="text", name="obj[crafts]["+k+"]", value=pdthd.crafts[k])
+			.form-group.row
+				label.col-4.col-md-2.col-form-label(for="noteIpt") 备注
+				input#noteData.form-control(type="hidden", value=pdthd.note)
+				.col-8.col-md-10
+					textarea#noteIpt.form-control(type="text", rows="3", name="obj[note]", placeholder="备注")
+			hr
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="提交")
+	script(src="/js/user/bner/pdthd/edit.js")
